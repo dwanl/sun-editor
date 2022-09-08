@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "sun-editor",
+  "version": "0.0.0",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build:server": "lerna run build:server",
+    "start:server": "lerna run start:server",
+    "dev:server": "lerna run dev:server",
+    "dev": "lerna run dev"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
