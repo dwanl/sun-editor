@@ -11,6 +11,10 @@ import {
   overrideMonaco,
 } from "../language";
 
+import { StaticServices } from "monaco-editor/esm/vs/editor/standalone/browser/standaloneServices";
+
+const codeEditorService = StaticServices.codeEditorService.get();
+
 const root = ref<HTMLElement | null>();
 const language = "cpp";
 const socketUrl = "/cpp";

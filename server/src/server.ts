@@ -15,7 +15,7 @@ process.on('uncaughtException', (err: any) => {
 })
 
 // create express server
-const port = 5000
+const port = 4200
 const app: Appclication = express()
 const server = http.createServer(app)
 
@@ -28,7 +28,7 @@ const wss = new WebSocketServer({
 server.on('upgrade', (request: http.IncomingMessage, socket: net.Socket, head: Buffer) => {
   const pathname = request.url ? url.parse(request.url).pathname : undefined;
   console.log('Pathname: ' + pathname)
-  if (pathname === '/lsp-server') {
+  if (pathname === '/cpp') {
     wss.handleUpgrade(request, socket, head, webSocket => {
       const socket: rpc.IWebSocket = {
         send: content => webSocket.send(content, error => {

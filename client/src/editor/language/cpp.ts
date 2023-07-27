@@ -10,12 +10,11 @@ import {
   MonacoServices,
   createConnection,
 } from "@codingame/monaco-languageclient";
+
 import normalizeUrl from 'normalize-url'
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import { CPP_KEYS } from './language/static-provider'
 
-import bus from './bus'
-
+import bus from '../../bus'
 
 let connected = false;
 interface Range {
@@ -25,7 +24,8 @@ interface Range {
   endColumn: number;
 }
 
-export function registerLanguage(editor: any, rootUri: string) {
+export function registerCppLanguage(editor: any, rootUri: string) {
+
   monaco.languages.register({
     id: "cpp",
     extensions: [".cpp", ".c", ".h", ".hpp"],
@@ -47,6 +47,7 @@ export function registerLanguage(editor: any, rootUri: string) {
       }
     }
   })
+
   MonacoServices.install(editor, {
     // 工作空间，缓存所在的根目录
     rootUri: rootUri
@@ -54,6 +55,8 @@ export function registerLanguage(editor: any, rootUri: string) {
 }
 
 export function connectLanguageClient(url: string) {
+  console.log(url);
+  
   if (!connected) {
     const normalizeUrl = getUrl(url)
     const webSocket: any = createWebSocket(normalizeUrl);
@@ -70,24 +73,6 @@ export function connectLanguageClient(url: string) {
     });
   }
 }
-
-function getUrl(path: string): string {
-  const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  return normalizeUrl(`${protocol}://localhost:4200${path}`);
-}
-
-function createWebSocket(url: string) {
-  const socketOptions = {
-    // WebSocket: WS,
-    maxReconnectionDelay: 10000,
-    minReconnectionDelay: 1000,
-    connectionTimeout: 10000,
-    maxRetries: Infinity,
-    debug: false,
-  };
-  return new ReconnectingWebSocket(url, [], socketOptions);
-}
-
 
 function createLanguageClient(connection: MessageConnection): MonacoLanguageClient {
   return new MonacoLanguageClient({
@@ -107,6 +92,24 @@ function createLanguageClient(connection: MessageConnection): MonacoLanguageClie
       },
     }
   })
+}
+
+function createWebSocket(url: string) {
+  const socketOptions = {
+    // WebSocket: WS,
+    maxReconnectionDelay: 10000,
+    minReconnectionDelay: 1000,
+    connectionTimeout: 10000,
+    maxRetries: Infinity,
+    debug: false,
+  };
+  return new ReconnectingWebSocket(url, [], socketOptions);
+}
+
+
+function getUrl(path: string): string {
+  const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  return normalizeUrl(`${protocol}://localhost:4200${path}`);
 }
 
 function getCompletionList(
@@ -225,7 +228,6 @@ function getCompletionList(
   return snippets;
 }
 
-
 export function overrideMonaco(editor: any) {
   const editorService = editor._codeEditorService;
   const openEditorBase = editorService.openCodeEditor.bind(editorService);
@@ -236,11 +238,11 @@ export function overrideMonaco(editor: any) {
       const fullPath = input.resource.path
       // monaco.editor.createModel('', 'CPP', monaco.Uri.file(fullPath))
       // alert("file is at " + fullPath )
-      console.log("Open definition for:", input.resource);
-      console.log("Corresponding model:", monaco.editor.getModel(input.resource));
-      console.log("Source: ", source);
+      console.log("打开的定义为:", input);
+      console.log("对应模型:", monaco.editor.getModel(input.resource));
+      console.log("来源: ", source);
       // source.setModel(monaco.editor.getModel(input.resource));
-      source.setModel(monaco.editor.createModel('sada', 'CPP', monaco.Uri.file(fullPath)));
+      // source.setModel(monaco.editor.createModel('sada', 'CPP', monaco.Uri.file(fullPath)));
       bus.emit('overrideMonaco', input)
     }
     return result; // always return the base result

@@ -2,6 +2,10 @@
   "private": true,
   "name": "sun-editor",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "packageManager": "yarn@1.22.19",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build:server": "lerna run build:server",
