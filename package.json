@@ -6,11 +6,10 @@
     "node": ">=14.15.0"
   },
   "packageManager": "yarn@1.22.19",
+  "homepage": "https://github.com/dwanl/sun-editor",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build:server": "lerna run build:server",
-    "start:server": "lerna run start:server",
-    "dev:server": "lerna run dev:server",
+    "server": "lerna run server",
+    "jsonrpc": "lerna run jsonrpc-server",
     "dev": "lerna run dev"
   },
   "devDependencies": {
@@ -18,6 +17,7 @@
   },
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "jsonrpc-language-server"
   ]
 }

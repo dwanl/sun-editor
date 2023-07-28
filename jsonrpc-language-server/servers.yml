@@ -1,0 +1,9 @@
+langservers:
+  cpp:
+    - ccls
+    - '--init={"cacheDirectory":"cpp","cacheFormat":"json","index":{"onChange":true,"initialNoLinkage": true, "trackDependency":2}}'
+  ts:
+    - typescript-language-server
+    - --stdio
+
+

@@ -1,0 +1,42 @@
+{
+  "name": "jsonrpc-language-server",
+  "version": "1.0.1",
+  "author": "zhaoxinglei",
+  "description": "Creates a web socket proxy for any number of language server processes",
+  "keywords": [
+    "jsonrpc",
+    "json-rpc",
+    "languageserver",
+    "websocket"
+  ],
+  "packageManager": "yarn@1.22.19",
+  "bin": "dist/server.js",
+  "main": "dist/server.js",
+  "scripts": {
+    "prepare": "npm run clean",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "tsc": "tsc",
+    "webpack": "webpack --config webpack.config.js",
+    "jsonrpc-server": "npm run webpack && node dist/server.js --port 4200 --languageServers servers.yml"
+  },
+  "dependencies": {
+    "@sourcegraph/vscode-ws-jsonrpc": "0.0.3-fork",
+    "js-yaml": "^3.13.1",
+    "minimist": "^1.2.0",
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.8",
+    "@types/ws": "^6.0.1",
+    "javascript-typescript-langserver": "^2.11.3",
+    "rimraf": "^2.6.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^3.5.1",
+    "vscode-css-languageserver-bin": "^1.4.0",
+    "vscode-html-languageserver-bin": "^1.4.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "license": "ISC"
+}
